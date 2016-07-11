@@ -5,6 +5,7 @@
 """
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class moll :
@@ -158,7 +159,7 @@ class moll :
         plt.xlim(self.x_range)
         plt.ylim(self.y_range)
 
-    def plotline (self, lon0, lon1, lat0, lat1, colorstyle=None) :
+    def plotline (self, lon0, lon1, lat0, lat1, colorstyle=None, label=None) :
         """ Plot a line from lon0/lat0 to lon1/lat1, by add interline point
         param lon0: longnitude of start point, in degree
         param lon1: longnitude of end point, in degree
@@ -170,9 +171,9 @@ class moll :
         lon = np.linspace(lon0, lon1, n)
         lat = np.linspace(lat0, lat1, n)
         x, y = self.project(lon, lat)
-        plt.plot(x, y, colorstyle)
+        plt.plot(x, y, colorstyle, label=label)
 
-    def polyline (self, lon, lat, colorstyle=None, close=False) :
+    def polyline (self, lon, lat, colorstyle=None, close=False, label=None) :
         """ Draw poly line to pass given point
         param lon: longnitude of points, in degree
         param lat: latitide of points, in degree
@@ -180,14 +181,14 @@ class moll :
         param close: if True, last point will connect to first
         """
         for p in range(1, len(lon)) :
-            self.plotline(lon[p-1], lon[p], lat[p-1], lat[p], colorstyle)
+            self.plotline(lon[p-1], lon[p], lat[p-1], lat[p], colorstyle, label=label)
         if close :
-            self.plotline(lon[-1], lon[0], lat[-1], lat[0], colorstyle)
+            self.plotline(lon[-1], lon[0], lat[-1], lat[0], colorstyle, label=label)
 
-    def scatter (self, lon, lat, colorstyle=".") :
+    def scatter (self, lon, lat, colorstyle=".", label=None) :
         """ Mark scatter point in map
         param lon: longnitude of points, in degree
         param lat: latitide of points, in degree
         """
         x, y = self.project(lon, lat)
-        plt.plot(x, y, colorstyle)
+        plt.plot(x, y, colorstyle, label=label)
